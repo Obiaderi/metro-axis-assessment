@@ -1,0 +1,112 @@
+[
+  {
+    "id": "DEL001",
+    "customerName": "John Smith",
+    "address": "123 Main Street, Downtown, City",
+    "latitude": 40.7128,
+    "longitude": -74.0060,
+    "status": "pending",
+    "timestamp": "2024-01-15T10:30:00Z",
+    "phoneNumber": "+1234567890",
+    "notes": "Ring doorbell twice"
+  },
+  {
+    "id": "DEL002",
+    "customerName": "Sarah Johnson",
+    "address": "456 Oak Avenue, Uptown, City",
+    "latitude": 40.7589,
+    "longitude": -73.9851,
+    "status": "in_transit",
+    "timestamp": "2024-01-15T11:15:00Z",
+    "phoneNumber": "+1234567891",
+    "notes": "Leave at front desk"
+  },
+  {
+    "id": "DEL003",
+    "customerName": "Michael Brown",
+    "address": "789 Pine Road, Midtown, City",
+    "latitude": 40.7505,
+    "longitude": -73.9934,
+    "status": "delivered",
+    "timestamp": "2024-01-15T09:45:00Z",
+    "phoneNumber": "+1234567892",
+    "notes": "Apartment 4B"
+  },
+  {
+    "id": "DEL004",
+    "customerName": "Emily Davis",
+    "address": "321 Elm Street, Westside, City",
+    "latitude": 40.7282,
+    "longitude": -74.0776,
+    "status": "pending",
+    "timestamp": "2024-01-15T12:00:00Z",
+    "phoneNumber": "+1234567893",
+    "notes": "Call before delivery"
+  },
+  {
+    "id": "DEL005",
+    "customerName": "David Wilson",
+    "address": "654 Maple Drive, Eastside, City",
+    "latitude": 40.7831,
+    "longitude": -73.9712,
+    "status": "in_transit",
+    "timestamp": "2024-01-15T13:30:00Z",
+    "phoneNumber": "+1234567894",
+    "notes": "Use side entrance"
+  },
+  {
+    "id": "DEL006",
+    "customerName": "Lisa Anderson",
+    "address": "987 Cedar Lane, Northside, City",
+    "latitude": 40.7749,
+    "longitude": -73.9442,
+    "status": "pending",
+    "timestamp": "2024-01-15T14:15:00Z",
+    "phoneNumber": "+1234567895",
+    "notes": "Fragile items"
+  },
+  {
+    "id": "DEL007",
+    "customerName": "Robert Taylor",
+    "address": "147 Birch Street, Southside, City",
+    "latitude": 40.6892,
+    "longitude": -74.0445,
+    "status": "delivered",
+    "timestamp": "2024-01-15T08:30:00Z",
+    "phoneNumber": "+1234567896",
+    "notes": "Business hours only"
+  },
+  {
+    "id": "DEL008",
+    "customerName": "Jennifer Martinez",
+    "address": "258 Spruce Avenue, Central, City",
+    "latitude": 40.7614,
+    "longitude": -73.9776,
+    "status": "pending",
+    "timestamp": "2024-01-15T15:45:00Z",
+    "phoneNumber": "+1234567897",
+    "notes": "Buzz apartment 12"
+  },
+  {
+    "id": "DEL009",
+    "customerName": "Christopher Lee",
+    "address": "369 Willow Road, Harbor, City",
+    "latitude": 40.7061,
+    "longitude": -74.0087,
+    "status": "failed",
+    "timestamp": "2024-01-15T16:20:00Z",
+    "phoneNumber": "+1234567898",
+    "notes": "Customer not available"
+  },
+  {
+    "id": "DEL010",
+    "customerName": "Amanda White",
+    "address": "741 Poplar Street, Heights, City",
+    "latitude": 40.7903,
+    "longitude": -73.9597,
+    "status": "in_transit",
+    "timestamp": "2024-01-15T17:00:00Z",
+    "phoneNumber": "+1234567899",
+    "notes": "Third floor, no elevator"
+  }
+]
