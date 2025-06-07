@@ -10,20 +10,24 @@ final authStateProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
 
 class AuthNotifier extends StateNotifier<AuthState> {
   final AuthService _authService;
-  
+
   AuthNotifier(this._authService) : super(AuthState.initial()) {
     _loadAuthState();
   }
-  
+
   Future<void> _loadAuthState() async {
     final authState = await _authService.getAuthState();
     state = authState;
   }
-  
+
+  Future<void> loadAuthState() async {
+    await _loadAuthState();
+  }
+
   Future<bool> sendOtp(String phoneNumber) async {
     return await _authService.sendOtp(phoneNumber);
   }
-  
+
   Future<bool> verifyOtp(String phoneNumber, String otp) async {
     final authState = await _authService.verifyOtp(phoneNumber, otp);
     if (authState != null) {
@@ -32,7 +36,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
     return false;
   }
-  
+
   Future<void> logout() async {
     await _authService.logout();
     state = AuthState.initial();

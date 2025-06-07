@@ -29,14 +29,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (value == null || value.isEmpty) {
       return 'Please enter your phone number';
     }
-    
+
     // Remove any non-digit characters
     final digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
-    
+
     if (digitsOnly.length < 10) {
       return 'Please enter a valid phone number';
     }
-    
+
     return null;
   }
 
@@ -51,13 +51,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     try {
       final phoneNumber = _phoneController.text.trim();
-      final success = await ref.read(authStateProvider.notifier).sendOtp(phoneNumber);
+      final success =
+          await ref.read(authStateProvider.notifier).sendOtp(phoneNumber);
 
       if (success) {
         if (mounted) {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => OtpVerificationScreen(phoneNumber: phoneNumber),
+              builder: (context) =>
+                  OtpVerificationScreen(phoneNumber: phoneNumber),
             ),
           );
         }
@@ -96,11 +98,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           padding: EdgeInsets.all(AppConstants.paddingLarge.w),
           child: Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: ListView(
               children: [
                 SizedBox(height: 60.h),
-                
+
                 // Logo and Title
                 Center(
                   child: Column(
@@ -110,7 +111,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         height: 100.w,
                         decoration: BoxDecoration(
                           color: AppConstants.primaryColor,
-                          borderRadius: BorderRadius.circular(AppConstants.radiusXLarge),
+                          borderRadius:
+                              BorderRadius.circular(AppConstants.radiusXLarge),
                         ),
                         child: Icon(
                           Icons.local_shipping,
@@ -138,9 +140,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ],
                   ),
                 ),
-                
+
                 SizedBox(height: 60.h),
-                
+
                 // Login Form
                 Text(
                   AppStrings.loginTitle,
@@ -148,9 +150,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     fontSize: 24.sp,
                   ),
                 ),
-                
+
                 SizedBox(height: 24.h),
-                
+
                 TextFormField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
@@ -165,9 +167,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   validator: _validatePhoneNumber,
                 ),
-                
+
                 SizedBox(height: 32.h),
-                
+
                 ElevatedButton(
                   onPressed: _isLoading ? null : _sendOtp,
                   child: _isLoading
@@ -176,7 +178,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           width: 20.w,
                           child: const CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
                         )
                       : Text(
@@ -184,9 +187,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           style: TextStyle(fontSize: 16.sp),
                         ),
                 ),
-                
-                const Spacer(),
-                
+
+                // const Spacer(),
+                SizedBox(height: 120.h),
+
                 // Footer
                 Center(
                   child: Text(
@@ -197,7 +201,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   ),
                 ),
-                
+
                 SizedBox(height: 16.h),
               ],
             ),

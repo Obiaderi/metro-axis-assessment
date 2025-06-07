@@ -1,3 +1,6 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,18 +55,30 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   Future<void> _checkAuthAndNavigate() async {
+    log('Starting authentication check...');
+
     // Wait for animation to complete
     await Future.delayed(const Duration(seconds: 2));
-    
+
     if (!mounted) return;
-    
+
+    log('Loading auth state from storage...');
+    // Wait for auth state to be loaded from storage
+    final authNotifier = ref.read(authStateProvider.notifier);
+    await authNotifier.loadAuthState();
+
+    if (!mounted) return;
+
     final authState = ref.read(authStateProvider);
-    
+    log('Auth state loaded - isAuthenticated: ${authState.isAuthenticated}, phone: ${authState.phoneNumber}');
+
     if (authState.isAuthenticated) {
+      log('User is authenticated, navigating to deliveries list');
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const DeliveriesListScreen()),
       );
     } else {
+      log('User is not authenticated, navigating to login screen');
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
@@ -96,7 +111,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       height: 120.w,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(AppConstants.radiusXLarge),
+                        borderRadius:
+                            BorderRadius.circular(AppConstants.radiusXLarge),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.1),
