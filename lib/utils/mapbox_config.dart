@@ -1,6 +1,7 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class MapboxConfig {
-  static const String accessToken =
-      'sk.eyJ1IjoibWV0cm9heGlzIiwiYSI6ImNtYmo5cnhpNzBkc2cybXF0ZmNuOGk1NjEifQ.RBckvqHCiAVsrRg-6e794g';
+  // static const String accessToken = dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '';
 
   // Default map style
   static const String mapStyle = 'mapbox://styles/mapbox/streets-v12';

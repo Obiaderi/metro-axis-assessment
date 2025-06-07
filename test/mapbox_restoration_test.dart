@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:metro_axis/models/delivery.dart';
 import 'package:metro_axis/utils/mapbox_config.dart';
@@ -5,8 +6,8 @@ import 'package:metro_axis/utils/mapbox_config.dart';
 void main() {
   group('Mapbox Maps Flutter Restoration Tests', () {
     test('MapboxConfig should have correct access token', () {
-      expect(MapboxConfig.accessToken, isNotEmpty);
-      expect(MapboxConfig.accessToken, startsWith('sk.'));
+      expect(dotenv.env['MAPBOX_ACCESS_TOKEN'], isNotEmpty);
+      expect(dotenv.env['MAPBOX_ACCESS_TOKEN'], startsWith('sk.'));
     });
 
     test('MapboxConfig should have correct default zoom', () {
@@ -34,7 +35,7 @@ void main() {
     test('Red marker color values should be correct', () {
       const redColor = 0xFFFF0000;
       const whiteColor = 0xFFFFFFFF;
-      
+
       // Verify color format is correct for Mapbox
       expect(redColor, equals(4294901760)); // Red in int format
       expect(whiteColor, equals(4294967295)); // White in int format
@@ -62,7 +63,7 @@ void main() {
       const circleRadius = 15.0;
       const circleStrokeWidth = 4.0;
       const circleOpacity = 0.9;
-      
+
       expect(circleRadius, greaterThan(0));
       expect(circleStrokeWidth, greaterThan(0));
       expect(circleOpacity, greaterThan(0));
@@ -73,7 +74,7 @@ void main() {
       const textSize = 24.0;
       const textOpacity = 1.0;
       const locationEmoji = '📍';
-      
+
       expect(textSize, greaterThan(0));
       expect(textOpacity, equals(1.0));
       expect(locationEmoji, isNotEmpty);
