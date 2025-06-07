@@ -47,8 +47,9 @@ dependencies:
   fluttertoast: ^8.2.4
   iconly: ^1.0.1
 
-  # Camera
+  # Camera and File Storage
   camera: ^0.10.5+5
+  path_provider: ^2.1.1
   rename_app: ^1.6.3
 
 dev_dependencies:

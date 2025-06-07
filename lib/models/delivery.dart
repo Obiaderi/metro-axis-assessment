@@ -15,6 +15,7 @@ class Delivery with _$Delivery {
     required DateTime timestamp,
     String? phoneNumber,
     String? notes,
+    String? photoPath,
   }) = _Delivery;
 
   factory Delivery.fromJson(Map<String, dynamic> json) =>

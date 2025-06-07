@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +30,13 @@ class DeliveryDetailScreen extends ConsumerStatefulWidget {
 class _DeliveryDetailScreenState extends ConsumerState<DeliveryDetailScreen> {
   bool _isUpdating = false;
   MapboxMap? _mapboxMap;
+  String? _currentPhotoPath;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPhotoPath = widget.delivery.photoPath;
+  }
 
   Future<void> _markAsDelivered() async {
     if (widget.delivery.status == DeliveryStatusEnum.delivered) {
@@ -111,12 +119,21 @@ class _DeliveryDetailScreenState extends ConsumerState<DeliveryDetailScreen> {
     }
   }
 
-  void _openCamera() {
-    Navigator.of(context).push(
+  Future<void> _openCamera() async {
+    final String? photoPath = await Navigator.of(context).push<String>(
       MaterialPageRoute(
         builder: (context) => CameraScreen(deliveryId: widget.delivery.id),
       ),
     );
+
+    if (photoPath != null && mounted) {
+      setState(() {
+        _currentPhotoPath = photoPath;
+      });
+
+      // Refresh the delivery data to include the new photo
+      ref.invalidate(deliveryByIdProvider(widget.delivery.id));
+    }
   }
 
   Future<void> _addDeliveryMarker() async {
@@ -380,6 +397,78 @@ class _DeliveryDetailScreenState extends ConsumerState<DeliveryDetailScreen> {
           ),
 
           SizedBox(height: 16.h),
+
+          // Photo Section
+          if (_currentPhotoPath != null) ...[
+            Card(
+              child: Padding(
+                padding: EdgeInsets.all(AppConstants.paddingMedium.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          IconlyBold.camera,
+                          size: 20.sp,
+                          color: AppConstants.primaryColor,
+                        ),
+                        SizedBox(width: 8.w),
+                        Text(
+                          'Delivery Photo',
+                          style: AppConstants.headingSmall.copyWith(
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          icon: const Icon(IconlyLight.camera),
+                          onPressed: _openCamera,
+                          tooltip: 'Retake Photo',
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(AppConstants.radiusMedium),
+                      child: Image.file(
+                        File(_currentPhotoPath!),
+                        width: double.infinity,
+                        height: 200.h,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            width: double.infinity,
+                            height: 200.h,
+                            color: Colors.grey.shade200,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  IconlyLight.danger,
+                                  size: 48.sp,
+                                  color: Colors.grey.shade400,
+                                ),
+                                SizedBox(height: 8.h),
+                                Text(
+                                  'Photo not found',
+                                  style: AppConstants.bodyMedium.copyWith(
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 16.h),
+          ],
 
           // // Map
           // Card(

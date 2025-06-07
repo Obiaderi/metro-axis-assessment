@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:camera/camera.dart';
 import 'package:iconly/iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../utils/constants.dart';
+import '../services/photo_service.dart';
 
 class CameraScreen extends StatefulWidget {
   final String deliveryId;
@@ -22,7 +24,9 @@ class _CameraScreenState extends State<CameraScreen> {
   List<CameraDescription>? _cameras;
   bool _isInitialized = false;
   bool _isCapturing = false;
+  bool _isSaving = false;
   XFile? _capturedImage;
+  final PhotoService _photoService = PhotoService();
 
   @override
   void initState() {
@@ -88,15 +92,45 @@ class _CameraScreenState extends State<CameraScreen> {
     });
   }
 
-  void _confirmPicture() {
-    Fluttertoast.showToast(
-      msg: 'Photo saved for delivery ${widget.deliveryId}',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: AppConstants.deliveredColor,
-      textColor: Colors.white,
-    );
-    Navigator.of(context).pop();
+  Future<void> _confirmPicture() async {
+    if (_capturedImage == null) return;
+
+    setState(() {
+      _isSaving = true;
+    });
+
+    try {
+      // Save the photo using PhotoService
+      final String? savedPhotoPath = await _photoService.saveDeliveryPhoto(
+        widget.deliveryId,
+        _capturedImage!,
+      );
+
+      if (savedPhotoPath != null) {
+        Fluttertoast.showToast(
+          msg: 'Photo saved for delivery ${widget.deliveryId}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: AppConstants.deliveredColor,
+          textColor: Colors.white,
+        );
+
+        // Return the photo path to the previous screen
+        if (mounted) {
+          Navigator.of(context).pop(savedPhotoPath);
+        }
+      } else {
+        _showError('Failed to save photo');
+        setState(() {
+          _isSaving = false;
+        });
+      }
+    } catch (e) {
+      _showError('Error saving photo: $e');
+      setState(() {
+        _isSaving = false;
+      });
+    }
   }
 
   void _showError(String message) {
@@ -225,10 +259,7 @@ class _CameraScreenState extends State<CameraScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: FileImage(
-                  // Note: XFile doesn't directly work with FileImage
-                  // In a real implementation, you'd need to handle this properly
-                  // For now, this is a placeholder
-                  _capturedImage as dynamic,
+                  File(_capturedImage!.path),
                 ),
                 fit: BoxFit.cover,
               ),
@@ -241,7 +272,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   fontSize: 16.sp,
                   shadows: [
                     Shadow(
-                      color: Colors.black.withOpacity(0.7),
+                      color: Colors.black.withValues(alpha: 0.7),
                       blurRadius: 10,
                     ),
                   ],
@@ -273,10 +304,20 @@ class _CameraScreenState extends State<CameraScreen> {
 
               // Confirm button
               ElevatedButton.icon(
-                onPressed: _confirmPicture,
-                icon: const Icon(IconlyBold.tick_square),
+                onPressed: _isSaving ? null : _confirmPicture,
+                icon: _isSaving
+                    ? SizedBox(
+                        width: 16.w,
+                        height: 16.h,
+                        child: const CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
+                    : const Icon(IconlyBold.tick_square),
                 label: Text(
-                  AppStrings.confirmButton,
+                  _isSaving ? 'Saving...' : AppStrings.confirmButton,
                   style: TextStyle(fontSize: 14.sp),
                 ),
                 style: ElevatedButton.styleFrom(

@@ -29,6 +29,7 @@ mixin _$Delivery {
   DateTime get timestamp => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
+  String? get photoPath => throw _privateConstructorUsedError;
 
   /// Serializes this Delivery to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,7 +55,8 @@ abstract class $DeliveryCopyWith<$Res> {
       DeliveryStatusEnum status,
       DateTime timestamp,
       String? phoneNumber,
-      String? notes});
+      String? notes,
+      String? photoPath});
 }
 
 /// @nodoc
@@ -81,6 +83,7 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
     Object? timestamp = null,
     Object? phoneNumber = freezed,
     Object? notes = freezed,
+    Object? photoPath = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -119,6 +122,10 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
+      photoPath: freezed == photoPath
+          ? _value.photoPath
+          : photoPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -140,7 +147,8 @@ abstract class _$$DeliveryImplCopyWith<$Res>
       DeliveryStatusEnum status,
       DateTime timestamp,
       String? phoneNumber,
-      String? notes});
+      String? notes,
+      String? photoPath});
 }
 
 /// @nodoc
@@ -165,6 +173,7 @@ class __$$DeliveryImplCopyWithImpl<$Res>
     Object? timestamp = null,
     Object? phoneNumber = freezed,
     Object? notes = freezed,
+    Object? photoPath = freezed,
   }) {
     return _then(_$DeliveryImpl(
       id: null == id
@@ -203,6 +212,10 @@ class __$$DeliveryImplCopyWithImpl<$Res>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
+      photoPath: freezed == photoPath
+          ? _value.photoPath
+          : photoPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -219,7 +232,8 @@ class _$DeliveryImpl implements _Delivery {
       required this.status,
       required this.timestamp,
       this.phoneNumber,
-      this.notes});
+      this.notes,
+      this.photoPath});
 
   factory _$DeliveryImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeliveryImplFromJson(json);
@@ -242,10 +256,12 @@ class _$DeliveryImpl implements _Delivery {
   final String? phoneNumber;
   @override
   final String? notes;
+  @override
+  final String? photoPath;
 
   @override
   String toString() {
-    return 'Delivery(id: $id, customerName: $customerName, address: $address, latitude: $latitude, longitude: $longitude, status: $status, timestamp: $timestamp, phoneNumber: $phoneNumber, notes: $notes)';
+    return 'Delivery(id: $id, customerName: $customerName, address: $address, latitude: $latitude, longitude: $longitude, status: $status, timestamp: $timestamp, phoneNumber: $phoneNumber, notes: $notes, photoPath: $photoPath)';
   }
 
   @override
@@ -266,13 +282,15 @@ class _$DeliveryImpl implements _Delivery {
                 other.timestamp == timestamp) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
-            (identical(other.notes, notes) || other.notes == notes));
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.photoPath, photoPath) ||
+                other.photoPath == photoPath));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, customerName, address,
-      latitude, longitude, status, timestamp, phoneNumber, notes);
+      latitude, longitude, status, timestamp, phoneNumber, notes, photoPath);
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
@@ -300,7 +318,8 @@ abstract class _Delivery implements Delivery {
       required final DeliveryStatusEnum status,
       required final DateTime timestamp,
       final String? phoneNumber,
-      final String? notes}) = _$DeliveryImpl;
+      final String? notes,
+      final String? photoPath}) = _$DeliveryImpl;
 
   factory _Delivery.fromJson(Map<String, dynamic> json) =
       _$DeliveryImpl.fromJson;
@@ -323,6 +342,8 @@ abstract class _Delivery implements Delivery {
   String? get phoneNumber;
   @override
   String? get notes;
+  @override
+  String? get photoPath;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.

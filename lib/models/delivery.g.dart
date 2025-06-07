@@ -17,6 +17,7 @@ _$DeliveryImpl _$$DeliveryImplFromJson(Map<String, dynamic> json) =>
       timestamp: DateTime.parse(json['timestamp'] as String),
       phoneNumber: json['phoneNumber'] as String?,
       notes: json['notes'] as String?,
+      photoPath: json['photoPath'] as String?,
     );
 
 Map<String, dynamic> _$$DeliveryImplToJson(_$DeliveryImpl instance) =>
@@ -30,6 +31,7 @@ Map<String, dynamic> _$$DeliveryImplToJson(_$DeliveryImpl instance) =>
       'timestamp': instance.timestamp.toIso8601String(),
       'phoneNumber': instance.phoneNumber,
       'notes': instance.notes,
+      'photoPath': instance.photoPath,
     };
 
 const _$DeliveryStatusEnumEnumMap = {
