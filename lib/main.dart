@@ -1,13 +1,19 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'utils/constants.dart';
 import 'utils/theme.dart';
+import 'utils/mapbox_config.dart';
 import 'screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Mapbox
+  MapboxOptions.setAccessToken(MapboxConfig.accessToken);
 
   // Set preferred orientations
   SystemChrome.setPreferredOrientations([
@@ -38,7 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812), // iPhone X design size
+      designSize: const ui.Size(375, 812), // iPhone X design size
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

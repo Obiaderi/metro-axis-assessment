@@ -129,7 +129,8 @@ class _DeliveriesListScreenState extends ConsumerState<DeliveriesListScreen> {
                   child: ListView.builder(
                     controller: _scrollController,
                     padding: EdgeInsets.symmetric(
-                        vertical: AppConstants.paddingSmall.h),
+                            vertical: AppConstants.paddingSmall.h)
+                        .copyWith(bottom: 50.h),
                     itemCount: deliveries.length,
                     itemBuilder: (context, index) {
                       final delivery = deliveries[index];

@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>MBXAccessToken</key>
+	<string>sk.eyJ1IjoibWV0cm9heGlzIiwiYSI6ImNtYmo5cnhpNzBkc2cybXF0ZmNuOGk1NjEifQ.RBckvqHCiAVsrRg-6e794g</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app requires location access to function properly.</string>
 </dict>
 </plist>
